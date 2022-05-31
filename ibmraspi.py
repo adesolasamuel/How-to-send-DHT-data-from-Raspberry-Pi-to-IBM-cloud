@@ -11,10 +11,10 @@ dhtDevice = adafruit_dht.DHT11(board.D4)
 # but it will not work in CircuitPython.
 dhtDevice = adafruit_dht.DHT11(board.D4, use_pulseio=False)
 
-ORG = "o11pt9"
-DEVICE_TYPE = "RPi" 
-TOKEN = "fTqJS0egUioEfO@cq!"
-DEVICE_ID = "e45f012cfd11"
+ORG = "*******"
+DEVICE_TYPE = "********" 
+TOKEN = "******************"
+DEVICE_ID = "*****************"
 
 server = ORG + ".messaging.internetofthings.ibmcloud.com";
 pubTopic1 = "iot-2/evt/Temperature/fmt/json";
