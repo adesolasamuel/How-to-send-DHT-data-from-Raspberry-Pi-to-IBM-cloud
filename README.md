@@ -4,9 +4,11 @@ How to send data from Raspberry Pi to IBM Cloud Watson IoT Platform
 
 IoT being an integral part of cloud computing, several cloud vendors make Iinternet of Tthings (IoT) part of the services they render. Also, with the emergence of IoT, there are different platform that makes IoT implementation available even to individuals. In this tutorial, I will be taking you through steps in sending data from Raspberry Pi, an IoT development platform to IBM Cloud IoT platform.
 To ensure all necessary things are in place make sure you have access to your Raspberry Pi. You can either access the Raspberry pi in Headed form using Monitor, keyboard and mouse or in Headless form via SSH and VNC. In this tutorial. The link below explains how you can access your raspberry pi in two forms:
-Headed Access:
-Headless Access: 
-The Watson IoT Platform
+Headed Access: https://www.raspberrypi.com/documentation/computers/getting-started.html
+Headless Access: https://www.raspberrypi.com/documentation/computers/remote-access.html#introduction-to-remote-access
+
+# The Watson IoT Platform
+
 The Watson IoT Platform is a service offered by IBM Cloud that allows data to be sent from various IoT devices to the cloud. You can either connect a simulated device or connect an actual device, in this tutorial, I will be showing you how to connect an actual device which is Raspberry pi.
 The Hardware
 For this tutorial, we will be using the following materials:
@@ -15,19 +17,28 @@ For this tutorial, we will be using the following materials:
 3.	10k ohm resistor
 4.	Jumper wires
 5.	Breadboard
-The Hardware setup
-Step 1: The very first step is to ensure that you can access your raspberry pi, you can use the link above to check how to set up your Raspberry pi in either headed or headless form.
-Step 2: Connect the DHT 11 to the breadboard, depending on your model of DHT 11, it can be a 3-pin ready made model or a 4-pin model, in this tutorial, I am using a 4-pin model. If you are using a 3-pin model, connect the VCC to 3V of the Raspberry pi (PIN 1), GND of the DHT 11 to GND on the Raspberry pi (PIN 6) and connect the data pin to GPIO 4 (PIN 7) of the Raspberry pi. If it is 4-pin model you are using, connect Pin 1 of the DHT11 to 3V of the Raspberry pi (PIN 1), connect the 10K resistor between pin 1 and pin 2 of the DHT 11 and again connect pin 2 of the DHT11 to GPIO 4 (PIN 7) of the Raspberry pi, leave pin 3 of the DHT 11 sensor unconnected and connect pin 4 of the DHT 11 to GND on the Raspberry pi (PIN 6).
+
+# The Hardware setup
+
+**STEP 1:**
+The very first step is to ensure that you can access your raspberry pi, you can use the link above to check how to set up your Raspberry pi in either headed or headless form.
+
+**STEP 2:**
+Connect the DHT 11 to the breadboard, depending on your model of DHT 11, it can be a 3-pin ready made model or a 4-pin model, in this tutorial, I am using a 4-pin model. If you are using a 3-pin model, connect the VCC to 3V of the Raspberry pi (PIN 1), GND of the DHT 11 to GND on the Raspberry pi (PIN 6) and connect the data pin to GPIO 4 (PIN 7) of the Raspberry pi. If it is 4-pin model you are using, connect Pin 1 of the DHT11 to 3V of the Raspberry pi (PIN 1), connect the 10K resistor between pin 1 and pin 2 of the DHT 11 and again connect pin 2 of the DHT11 to GPIO 4 (PIN 7) of the Raspberry pi, leave pin 3 of the DHT 11 sensor unconnected and connect pin 4 of the DHT 11 to GND on the Raspberry pi (PIN 6).
  
 ![image](https://user-images.githubusercontent.com/55460620/174076448-6711f2b5-7d29-42e5-83ac-08ca29c402fd.png)
 
 Circuit Diagram
- ![image](https://user-images.githubusercontent.com/55460620/174076470-234f962b-0b52-423e-b637-92305f0110da.png)
+![image](https://user-images.githubusercontent.com/55460620/174076470-234f962b-0b52-423e-b637-92305f0110da.png)
 
 
-Reading DHT sensor Data on your Raspberry Pi
+# Reading DHT sensor Data on your Raspberry Pi
+
 Unlike Arduino or other related board that have support from DHT sensor straight out of the box, we need to set up our Raspberry pi first to be able to read data from DHT sensor. Before we can send the data to IBM Cloud, we need to be able to read the data from DHT11 sensor. 
-STEP 1: Installing CircuitPython Libraries on Raspberry Pi
+
+**STEP 1:** 
+Installing CircuitPython Libraries on Raspberry Pi
+
 Update your Raspberry pi by running the standard updates and download dependencies
 ```
 sudo apt-get update
@@ -45,7 +56,9 @@ sudo python3 raspi-blinka.py
 ```
 If your system default Python is Python 2 (which is likely on a first install), it will ask to confirm that you want to proceed. Choose yes. It may take a few minutes to run. When it finishes, it will ask you if you would like to reboot. Choose yes. Once it reboots, the connection will close. After a couple of minutes, you can reconnect.
 
-STEP 2: Installing the CircuitPython-DHT Library
+**STEP 2:**
+Installing the CircuitPython-DHT Library
+
 You'll also need to install a library to communicate with the DHT sensor. Since we're using Adafruit Blinka (CircuitPython), we can install CircuitPython libraries straight to our small linux board. In this case, we're going to install the CircuitPython_DHT library. This library works with both the DHT22 and DHT11 sensors.
 Run the following command to install the CircuitPython-DHT library:
 pip3 install adafruit-circuitpython-dht
@@ -54,18 +67,21 @@ STEP 3: Testing the DHT Library
 To test the working of the DHT11 download the code from this repository:
 https://github.com/adesolasamuel/Raspberry-pi-DHT11-Sensor
 If you are able to set it up correctly, running the code should give you an output as below:
+
+![image](https://user-images.githubusercontent.com/55460620/174415700-368d01b7-f1db-49d7-b82c-c1d1270f9181.png)
  
 
-Setting up IBM Cloud
-STEP 1: After making sure that our Raspberry pi is able to read DHT11 data correctly, the next thing is to head over to IBM cloud to set up communication with our device. Since the Raspberry pi is a full-blown computer, you can decide to either run the setup on your Raspberry pi or another computer. To access the IBM cloud portal, enter the following address in your Browser window www.ibm.com/cloud , if you do not have an account, create a new one or you can sign in with an already existing account by clicking on console at the top right-hand corner.
+# Setting up IBM Cloud
+**STEP 1:** 
+After making sure that our Raspberry pi is able to read DHT11 data correctly, the next thing is to head over to IBM cloud to set up communication with our device. Since the Raspberry pi is a full-blown computer, you can decide to either run the setup on your Raspberry pi or another computer. To access the IBM cloud portal, enter the following address in your Browser window www.ibm.com/cloud , if you do not have an account, create a new one or you can sign in with an already existing account by clicking on console at the top right-hand corner.
  
-  ![image](https://user-images.githubusercontent.com/55460620/174076609-0790907b-7f6e-4560-98bd-105e00f42dbb.png)
+![image](https://user-images.githubusercontent.com/55460620/174076609-0790907b-7f6e-4560-98bd-105e00f42dbb.png)
 
  
  ![image](https://user-images.githubusercontent.com/55460620/174076630-ce07bb46-513b-4d91-8c21-1a08f1ca5f64.png)
 
 
-STEP 2: In IBM Cloud console, we are going to be using the Internet of Things Platform service, on the search bar, simply type in IoT and it should bring out Internet of Things Platform as part of the results, click on Internet of Things Platform.
+**STEP 2:** In IBM Cloud console, we are going to be using the Internet of Things Platform service, on the search bar, simply type in IoT and it should bring out Internet of Things Platform as part of the results, click on Internet of Things Platform.
  
  ![image](https://user-images.githubusercontent.com/55460620/174076683-b309bd17-2c1c-4820-8337-b369b99c923d.png)
 
@@ -80,7 +96,7 @@ In the next page, you will have your service summary, to launch the service, cli
 ![image](https://user-images.githubusercontent.com/55460620/174076754-f7ced346-d959-4e03-af29-427fa4229dec.png)
 
 
-STEP 3: Another window will open which is the IBM Watson IoT Platform, again you will have to sign in by clicking sign in at the top right-hand corner. Sign in with the same IBMid email and password.
+**STEP 3:** Another window will open which is the IBM Watson IoT Platform, again you will have to sign in by clicking sign in at the top right-hand corner. Sign in with the same IBMid email and password.
  
  ![image](https://user-images.githubusercontent.com/55460620/174076809-d62fb63e-fa8e-480b-8788-8c611dceafab.png)
 
@@ -91,7 +107,7 @@ After signing in click on your profile at the top right-hand corner to access th
  
  ![image](https://user-images.githubusercontent.com/55460620/174076897-20ddd411-df6f-4b11-aa30-8560f4c7c621.png)
 
-STEP 4: The next thing to do is to set up IBM Watson IoT to receive data from Raspberry pi. We are going to be doing three things on Watson, creating a device type, creating a device and setting up security. To create a device type, select Devices from the options and click on the Device Types tab.
+**STEP 4:** The next thing to do is to set up IBM Watson IoT to receive data from Raspberry pi. We are going to be doing three things on Watson, creating a device type, creating a device and setting up security. To create a device type, select Devices from the options and click on the Device Types tab.
  
  ![image](https://user-images.githubusercontent.com/55460620/174076968-25a5789d-4551-4b69-b55e-a3c56d2c1541.png)
 
@@ -104,7 +120,7 @@ Click on Add Device Type and give your device type a name and description, then 
 
 
 Next is to add a device to our device type, again click on the Devices option from the left panel and click on Add Device. 
-STEP 5: Select the new device type you just created as the device type and the device ID will be our Raspberry pi MAC address. To get your raspberry pi MAC address, type ifconfig in your Raspberry pi shell and it will display an address that starts with the keyword ether.
+**STEP 5:** Select the new device type you just created as the device type and the device ID will be our Raspberry pi MAC address. To get your raspberry pi MAC address, type ifconfig in your Raspberry pi shell and it will display an address that starts with the keyword ether.
  
 ![image](https://user-images.githubusercontent.com/55460620/174077093-6bd3770b-c703-4581-9725-91053cc39f11.png)
 
@@ -135,7 +151,7 @@ Click on device in the left panel again and you will see a device with the statu
 ![image](https://user-images.githubusercontent.com/55460620/174077371-ae618105-62b6-4498-855b-d8a461b41840.png)
 
 
-STEP 6: The next thing we will do is to create a dashboard to monitor our data, click on Boards in the left panel, we will be creating a two cards, Humidity and Temperature inside the Usage overview board, click on Usage overview and click Add New Cards.
+**STEP 6:** The next thing we will do is to create a dashboard to monitor our data, click on Boards in the left panel, we will be creating a two cards, Humidity and Temperature inside the Usage overview board, click on Usage overview and click Add New Cards.
  
  ![image](https://user-images.githubusercontent.com/55460620/174077409-38d6df05-4aab-4683-a1ca-affb4caeae33.png)
 
@@ -172,7 +188,7 @@ Follow the exact process and create a card for Humidity.
 ![image](https://user-images.githubusercontent.com/55460620/174077752-c575f10a-a8ee-4baf-ac9b-1b98fc837063.png)
 
 
-STEP 7: To set up security, click on security in the left panel and click on the pencil icon to edit the connectivity settings and select TLS Optional among the drop-down options the click save.
+**STEP 7:** To set up security, click on security in the left panel and click on the pencil icon to edit the connectivity settings and select TLS Optional among the drop-down options the click save.
  
  ![image](https://user-images.githubusercontent.com/55460620/174077778-af882363-8daf-42ad-b475-3d98fddb6249.png)
 
@@ -182,7 +198,7 @@ STEP 7: To set up security, click on security in the left panel and click on the
 
 ![image](https://user-images.githubusercontent.com/55460620/174077917-76ef9970-76c7-4830-9ff7-bcbb9f2c7301.png)
  
-STEP 8: We are now ready to run the code, first we need to install the MQTT client, Go back to your Raspberry pi terminal and run pip3 install paho-mqtt 
+**STEP 8:** We are now ready to run the code, first we need to install the MQTT client, Go back to your Raspberry pi terminal and run pip3 install paho-mqtt 
  
  ![image](https://user-images.githubusercontent.com/55460620/174077954-b8e506d6-bd97-46fe-ad93-bb9abe42a01a.png)
  
@@ -195,7 +211,7 @@ After editing all necessary details, run the code either from thorny IDE or from
  
 ![image](https://user-images.githubusercontent.com/55460620/174078082-d449d1b6-a56b-4252-9af1-c12097e01d27.png)
 
-STEP 9: To monitor our data we head over to IBM Watson studio and our device status should show Connected, to view our data we can click on the dropdown arrow and select Recent events.
+**STEP 9:** To monitor our data we head over to IBM Watson studio and our device status should show Connected, to view our data we can click on the dropdown arrow and select Recent events.
  
  ![image](https://user-images.githubusercontent.com/55460620/174078140-9c6e5743-b805-40c8-846f-6ee6a760e115.png)
 
